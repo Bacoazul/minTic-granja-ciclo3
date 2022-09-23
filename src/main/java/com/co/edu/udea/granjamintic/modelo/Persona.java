@@ -12,6 +12,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -44,6 +46,7 @@ public class Persona {
 	@Column(nullable = false)
 	private Rol rol;
 	
+	@JsonIgnore
 	@ManyToMany
     @JoinTable(
             name = "MAYORDOMOS",

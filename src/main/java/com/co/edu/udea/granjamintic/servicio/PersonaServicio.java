@@ -13,9 +13,12 @@ import com.co.edu.udea.granjamintic.repositorio.PersonaRepositorio;
 @Service
 public class PersonaServicio {
 	
-	@Autowired
-	private PersonaRepositorio personaRepositorio;
+	private final PersonaRepositorio personaRepositorio;
 	
+	public PersonaServicio(PersonaRepositorio personaRepositorio) {
+		this.personaRepositorio = personaRepositorio;
+	}
+
 	public List<Persona> obtenerAdministradores() {
 		return personaRepositorio.findByRol(Rol.ADMINISTRADOR);
 	}

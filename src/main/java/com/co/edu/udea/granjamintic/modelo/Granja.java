@@ -52,6 +52,8 @@ public class Granja {
     )
 	private List<Persona> mayordomos;
 	
+
+	@JsonIgnore
 	@OneToMany(mappedBy = "granja")
 	private List<Animal> animales;
 
