@@ -1,11 +1,20 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
     <body>
         <img th:src="${persona.getUrlFoto()}" th:attr="alt=${persona.getNombres()}" referrerpolicy="no-referrer"/>
-	    <h2 th:text="'Hola, ' + ${persona.getNombres()} + ' ' + ${persona.getApellidos()}"></h2>
+	    <h1 th:text="'Hola, ' + ${persona.getNombres()} + ' ' + ${persona.getApellidos()}"></h1> <a th:href="@{/logout}">Cerrar sesión</a>
 	    <p th:text="'Correo electronico: ' + ${persona.getCorreoElectronico()}"></p>
 	    <p th:text="'Rol: ' + ${persona.getRol()}"></p>
 	    <p th:if="${persona.getCelular() == null}" th:text="'Celular: -- Sin guardar -- '"></p>
 	    <p th:if="${persona.getCelular() != null}" th:text="'Celular: ' + ${persona.getCelular()}"></p>
-	    <a th:href="@{/logout}">Cerrar sesión</a>
+      	<div th:if="${granja != null}">
+      		<h2>Granja como Administrador</h2>
+      		<p th:text="'ID: ' + ${granja.getId()}"></p>
+      		<p th:text="'Nombre: ' + ${granja.getNombre()}"></p>
+      		<p th:text="'Descripción: ' + ${granja.getDescripcion()}"></p>
+      		<button type="button"> <a href="/granja">Administrar</a> </button>
+        </div>
+      	<div th:if="${granja == null}">
+          <h2>En este momento no tienes granja para administrar</h>
+        </div>
     </body>
 </html>

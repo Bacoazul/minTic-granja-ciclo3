@@ -7,7 +7,7 @@ spring:
     database: POSTGRESQL
     show-sql: true
     generate-ddl: true
-    hibernate.ddl-auto: create
+    hibernate.ddl-auto: update
     properties.hibernate.jdbc.lob,non_contextual_creation: true
   sql.init.platform: postgres
   security:

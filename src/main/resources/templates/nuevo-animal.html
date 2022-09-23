@@ -1,0 +1,40 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <body>
+    	<form th:action="@{/animal}" th:object="${animal}" method="post">
+		    <fieldset>
+		        <legend>Agregar nuevo animal</legend>
+		        <table>
+		            <tr>
+		                <td><label>Especie: </label></td>
+		                <td>
+				            <select th:field="*{especieId}">
+							    <option th:each="especiev : ${especies}" th:value="${especiev.id}" th:text="${especiev.nombre}"></option>
+							</select>
+		                </td>
+		            </tr>
+		            <tr>
+		                <td><label>Fecha nacimiento: </label></td>
+		                <td><input type="date" th:field="*{fechaNacimiento}" /></td>
+		            </tr>
+		            <tr>
+		                <td><label>Estado salud: </label></td>
+		                <td><input type="text" th:field="*{estadoSalud}" /></td>
+		            </tr>
+		            <tr>
+		                <td><label>Descripcion: </label></td>
+		                <td><input type="text" th:field="*{descripcion}" /></td>
+		            </tr>
+		            <tr>
+		                <td><label>Ultima vacuna: </label></td>
+		                <td><input type="date" th:field="*{ultimaVacuna}" /></td>
+		            </tr>
+		            <tr>
+		                <td>
+		                    <button type="submit">Guardar</button>
+		                </td>
+		            </tr>
+		        </table>
+		    </fieldset>
+		</form>
+    </body>
+</html>

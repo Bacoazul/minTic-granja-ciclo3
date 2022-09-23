@@ -1,0 +1,33 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <body>
+    	<h1>Granja como Administrador</h1>
+      	<p th:text="'ID: ' + ${granja.getId()}"></p>
+      	<p th:text="'Nombre: ' + ${granja.getNombre()}"></p>
+      	<p th:text="'Descripción: ' + ${granja.getDescripcion()}"></p>
+      	<div th:if="${#lists.isEmpty(animales)}">
+	      <h2>-- Sin animales en la granja --</h2>
+        </div>
+      	<div th:if="${ not#lists.isEmpty(animales)}">
+	      <h2>Listado de animales</h2>
+          <table>
+            <tr>
+              <th>ID</th>
+              <th>Especie</th>
+              <th>Fecha Nacimiento</th>
+              <th>Estado salud</th>
+              <th>Descripcion</th>
+              <th>Ultima vacuna</th>
+            </tr>
+            <tr th:each="animal : ${animales}">
+              <td th:text="${animal.id}"></td>
+              <td th:text="${animal.especie.nombre}"></td>
+              <td th:text="${animal.fechaNacimiento}"></td>
+              <td th:text="${animal.estadoSalud}"></td>
+              <td th:text="${animal.descripcion}"></td>
+              <td th:text="${animal.ultimaVacuna}"></td>
+            </tr>
+          <table>
+        </div>
+      	<button type="button"> <a href="/animal">Agregar nuevo animal</a> </button>
+    </body>
+</html>

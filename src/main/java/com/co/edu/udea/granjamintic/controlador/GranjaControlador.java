@@ -1,52 +1,36 @@
 package com.co.edu.udea.granjamintic.controlador;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.co.edu.udea.granjamintic.modelo.Granja;
+import com.co.edu.udea.granjamintic.modelo.Persona;
 import com.co.edu.udea.granjamintic.servicio.GranjaServicio;
+import com.co.edu.udea.granjamintic.servicio.PersonaServicio;
+import com.co.edu.udea.granjamintic.sistema.utils.PersonaBuilder;
 
-@RestController
+import lombok.AllArgsConstructor;
+
+@Controller
 @RequestMapping("/granja")
+@AllArgsConstructor
 public class GranjaControlador {
 	
-	@Autowired
-	private GranjaServicio granjaServicio;
+	private final PersonaServicio personaServicio;
+	private final GranjaServicio granjaServicio;
 	
-	@GetMapping("/todas")
-	public ResponseEntity<List<Granja>> obtenerGranjas() {
-		List<Granja> granjas = granjaServicio.obtenerGranjas();
-		if (granjas.isEmpty()) {
-			return ResponseEntity.noContent().build();
-		}
-		return ResponseEntity.ok(granjas);
-	}
-
-	@GetMapping("/{id}")
-	public ResponseEntity<Granja> obtenerGranjaPorId(@PathVariable Integer id) {
-		Optional<Granja> granja = granjaServicio.obtenerGranjaPorId(id);
-		return granja.isPresent() ? ResponseEntity.ok(granja.get()) : ResponseEntity.notFound().build();
-	}
-
-	@GetMapping("/filtrado")
-	public ResponseEntity<Granja> obtenerGranjaFiltrado(@RequestParam(required = false) String nombre, @RequestParam(required = false) Integer idAdministrador) {
-		Optional<Granja> granja = granjaServicio.obtenerGranjaFiltrado(nombre, idAdministrador);
-		return granja.isPresent() ? ResponseEntity.ok(granja.get()) : ResponseEntity.notFound().build();
-	}
-
-	@PostMapping
-	public Granja guardarGranja(@RequestBody Granja granja) {
-		return granjaServicio.guardarGranja(granja);
-	}
+	@GetMapping
+    public String administrarGranja (Model model, @AuthenticationPrincipal OidcUser principal) {
+		Persona persona = PersonaBuilder.convertirAEntidad(principal.getUserInfo());
+		persona = personaServicio.guardarPersona(persona);
+		Granja granja = granjaServicio.obtenerGranjaFiltrado(null, persona.getId()).orElse(null);
+		model.addAttribute("granja", granja);
+		model.addAttribute("animales", granja.getAnimales());
+        return "granja";
+    }
 
 }

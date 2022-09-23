@@ -11,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,6 +40,7 @@ public class Animal {
 	private Granja granja;
 
 	@Column(nullable = false)
+	@DateTimeFormat(iso=ISO.DATE)
 	private Date fechaNacimiento;
 
 	@Column(nullable = false)
@@ -46,6 +50,7 @@ public class Animal {
 	private String descripcion;
 	
 	@Column(nullable = true)
+	@DateTimeFormat(iso=ISO.DATE)
 	private Date ultimaVacuna;
 
 }
