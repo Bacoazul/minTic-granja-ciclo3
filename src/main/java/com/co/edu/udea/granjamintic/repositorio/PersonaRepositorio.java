@@ -1,6 +1,7 @@
 package com.co.edu.udea.granjamintic.repositorio;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -28,5 +29,7 @@ public interface PersonaRepositorio extends JpaRepository<Persona, Integer> {
 	@Modifying(clearAutomatically = true)
 	@Transactional
 	void actualizarCelular(Integer idPersona, String celular);
+
+	Optional<Persona> findByOuth0Id(String outh0Id);
 
 }

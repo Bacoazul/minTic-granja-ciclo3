@@ -14,7 +14,6 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,13 +22,15 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "PERSONAS")
-@AllArgsConstructor
 @NoArgsConstructor
 public class Persona {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+
+	@Column(nullable = false, unique = true)
+	private String outh0Id;
 
 	@Column(nullable = false)
 	private String nombres;
@@ -40,7 +41,10 @@ public class Persona {
 	@Column(nullable = false)
 	private String correoElectronico;
 
-	@Column(nullable = false)
+	@Column(nullable = false, length = 1000)
+	private String urlFoto;
+
+	@Column
 	private String celular;
 
 	@Column(nullable = false)
@@ -54,4 +58,16 @@ public class Persona {
             inverseJoinColumns = {@JoinColumn(name = "GRANJA_ID")}
     )
 	private List<Granja> granjasComoMayordomo;
+
+	public Persona(String outh0Id, String nombres, String apellidos, String correoElectronico, String urlFoto,
+			Rol rol) {
+		this.outh0Id = outh0Id;
+		this.nombres = nombres;
+		this.apellidos = apellidos;
+		this.correoElectronico = correoElectronico;
+		this.urlFoto = urlFoto;
+		this.rol = rol;
+	}
+	
+	
 }

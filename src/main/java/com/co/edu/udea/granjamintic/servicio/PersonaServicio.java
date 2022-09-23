@@ -27,6 +27,10 @@ public class PersonaServicio {
 	}
 
 	public Persona guardarPersona(Persona persona) {
+		Optional<Persona> personaOptional = personaRepositorio.findByOuth0Id(persona.getOuth0Id());
+		if (personaOptional.isPresent()) {
+			return personaOptional.get();
+		}
 		return personaRepositorio.save(persona);
 	}
 
